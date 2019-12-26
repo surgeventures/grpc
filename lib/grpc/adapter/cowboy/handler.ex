@@ -270,11 +270,13 @@ defmodule GRPC.Adapter.Cowboy.Handler do
   end
 
   def info({:stream_reply, status, headers}, req, state) do
+    headers = GRPC.Transport.HTTP2.encode_metadata(headers)
     req = :cowboy_req.stream_reply(status, headers, req)
     {:ok, req, state}
   end
 
   def info({:set_resp_headers, headers}, req, state) do
+    headers = GRPC.Transport.HTTP2.encode_metadata(headers)
     req = :cowboy_req.set_resp_headers(headers, req)
     {:ok, req, state}
   end
@@ -379,6 +381,7 @@ defmodule GRPC.Adapter.Cowboy.Handler do
   end
 
   defp do_call_rpc(server, path, stream) do
+
     result = server.__call_rpc__(path, stream)
 
     case result do

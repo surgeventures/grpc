@@ -53,6 +53,35 @@ defmodule GRPC.Transport.HTTP2 do
     # TODO: Authorization
   end
 
+  def decode_details(details)
+       when is_binary(details) do
+    %Google.Rpc.Status{code: _code, message: _message, details: details} =
+      Google.Rpc.Status.decode(details)
+
+    Enum.map(details, &decode_any/1)
+  end
+
+  defp decode_any(%Google.Protobuf.Any{type_url: type_url, value: value}) do
+    [_, type] = String.split(type_url, "/")
+    msg_module = string_to_module(type)
+    msg_module.decode(value)
+  end
+
+  defp string_to_module(type) do
+    module =
+      type
+      |> String.split(".")
+      |> Enum.map(&Macro.camelize/1)
+      |> (&Enum.concat(["Elixir"], &1)).()
+      |> Enum.join(".")
+      |> String.to_atom()
+
+    case Code.ensure_loaded(module) do
+      {:module, module} -> module
+      {:error, reason} -> raise "Failed to load module. Reason: #{inspect(reason)}"
+    end
+  end
+
   defp content_type(custom, _codec) when is_binary(custom), do: custom
 
   defp content_type(_, codec) do
@@ -131,16 +160,26 @@ defmodule GRPC.Transport.HTTP2 do
   end
 
   defp encode_metadata_pair({key, val}) do
-    val = if String.ends_with?(key, "-bin"), do: Base.encode64(val), else: val
+    # Implementations ... should emit un-padded values
+    val = if String.ends_with?(key, "-bin"), do: Base.encode64(val, padding: false), else: val
     {String.downcase(to_string(key)), val}
   end
 
-  defp decode_metadata({key, val}) do
-    val = if String.ends_with?(key, "-bin"), do: Base.decode64!(val, padding: false), else: val
-    {key, val}
+  defp decode_metadata(kv = {key, val}) do
+    # Implementations MUST accept padded and un-padded values
+    if String.ends_with?(key, "-bin") do
+      if rem(IO.iodata_length(val), 4) == 0 do
+        {key, Base.decode64!(val)}
+      else
+        {key, Base.decode64!(val, padding: false)}
+      end
+    else
+      kv
+    end
   end
 
   defp is_reserved_header(":" <> _), do: true
+  defp is_reserved_header("grpc-status-details-bin"), do: false
   defp is_reserved_header("grpc-" <> _), do: true
   defp is_reserved_header("content-type"), do: true
   defp is_reserved_header("te"), do: true
