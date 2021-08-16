@@ -8,7 +8,7 @@ workflows:
   ci:
     jobs:
       - elixir-orb/test:
-          executor: elixir-orb/elixir-postgres
+          executor: elixir-orb/elixir
       - hold-for-dev-publish:
           type: approval
           requires:

@@ -51,7 +51,7 @@ defmodule GRPC.Mixfile do
 
   defp package do
     %{
-      name: "grpc_fresha",
+      name: :grpc_fresha,
       licenses: ["Apache 2"],
       links: %{"GitHub" => "https://github.com/surgeventures/grpc"},
       files: ~w(mix.exs README.md lib src config LICENSE .formatter.exs)
