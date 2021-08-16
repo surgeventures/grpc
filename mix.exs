@@ -1,12 +1,10 @@
 defmodule GRPC.Mixfile do
   use Mix.Project
 
-  @version "0.5.1"
-
   def project do
     [
       app: :grpc,
-      version: @version,
+      version: "0.5.1",
       elixir: "~> 1.5",
       elixirc_paths: elixirc_paths(Mix.env()),
       build_embedded: Mix.env() == :prod,
@@ -17,7 +15,7 @@ defmodule GRPC.Mixfile do
       docs: [
         extras: ["README.md"],
         main: "readme",
-        source_ref: "v#{@version}",
+        source_ref: "v0.5.1",
         source_url: "https://github.com/surgeventures/grpc"
       ],
       dialyzer: [
