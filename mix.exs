@@ -12,12 +12,6 @@ defmodule GRPC.Mixfile do
       deps: deps(),
       package: package(),
       description: "The Elixir implementation of gRPC",
-      docs: [
-        extras: ["README.md"],
-        main: "readme",
-        source_ref: "v0.5.1",
-        source_url: "https://github.com/surgeventures/grpc"
-      ],
       dialyzer: [
         plt_add_apps: [:mix, :iex]
       ],
