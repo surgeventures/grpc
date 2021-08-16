@@ -43,7 +43,9 @@ defmodule GRPC.Mixfile do
       # {:cowlib, "~> 2.9.0", override: true},
       {:ex_doc, "~> 0.23", only: :dev},
       {:inch_ex, "~> 2.0", only: [:dev, :test]},
-      {:dialyxir, "~> 1.0", only: [:dev, :test], runtime: false}
+      {:dialyxir, "~> 1.0", only: [:dev, :test], runtime: false},
+      {:junit_formatter, "~> 3.1", only: [:test]},
+      {:credo, "~> 1.5", only: [:dev, :test], runtime: false}
     ]
   end
 
