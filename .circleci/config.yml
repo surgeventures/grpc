@@ -9,14 +9,10 @@ workflows:
     jobs:
       - elixir-orb/test:
           executor: elixir-orb/elixir-postgres
-      - elixir-orb/static-check:
-          dialyzer: false
-          context: Hex
       - hold-for-dev-publish:
           type: approval
           requires:
             - elixir-orb/test
-            - elixir-orb/static-check
           filters:
             branches:
               ignore:
@@ -29,7 +25,6 @@ workflows:
           context: Hex
           requires:
             - elixir-orb/test
-            - elixir-orb/static-check
           filters:
             branches:
               only:
