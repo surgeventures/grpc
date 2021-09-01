@@ -135,7 +135,7 @@ defmodule GRPC.Adapter.Gun do
       {:response, headers, fin} ->
         {:ok, headers, fin}
 
-      error = {:error, _, headers} ->
+      error = {:error, _, _headers} ->
         error
 
       other ->
@@ -204,7 +204,7 @@ defmodule GRPC.Adapter.Gun do
                GRPC.RPCError.exception(
                  String.to_integer(headers["grpc-status"]),
                  headers["grpc-message"],
-                 decode_details(headers)
+                 decode_status_details(headers)
                ), headers}
           end
         else
@@ -226,7 +226,7 @@ defmodule GRPC.Adapter.Gun do
              GRPC.RPCError.exception(
                String.to_integer(headers["grpc-status"]),
                headers["grpc-message"],
-               decode_details(headers)
+               decode_status_details(headers)
              ), headers}
           else
             {:response, headers, :nofin}
@@ -310,10 +310,10 @@ defmodule GRPC.Adapter.Gun do
     %{retries: retries - 1, timeout: timeout}
   end
 
-  defp decode_details(%{"grpc-status-details-bin" => details})
+  defp decode_status_details(%{"grpc-status-details-bin" => details})
        when is_binary(details) do
-    GRPC.Transport.HTTP2.decode_details(details)
+    GRPC.Transport.Utils.decode_status_details(details)
   end
 
-  defp decode_details(_headers), do: nil
+  defp decode_status_details(_headers), do: nil
 end

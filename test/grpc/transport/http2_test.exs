@@ -10,6 +10,23 @@ defmodule GRPC.Transport.HTTP2Test do
     assert pair == Enum.find(headers, nil, fn {k, _v} -> if k == key, do: true end)
   end
 
+  test "server_trailers/3 returns map without grpc-status-details-bin" do
+    trailers = HTTP2.server_trailers(GRPC.Status.invalid_argument(), "test message", "")
+
+    assert trailers == %{"grpc-message" => "test message", "grpc-status" => "3"}
+  end
+
+  test "server_trailers/3 returns map with grpc-status-details-bin" do
+    trailers =
+      HTTP2.server_trailers(GRPC.Status.invalid_argument(), "test message", "some details")
+
+    assert trailers == %{
+             "grpc-message" => "test message",
+             "grpc-status" => "3",
+             "grpc-status-details-bin" => Base.encode64("some details")
+           }
+  end
+
   test "client_headers/3 returns basic headers" do
     stream = %Stream{channel: @channel, path: "/foo/bar"}
     headers = HTTP2.client_headers(stream, %{grpc_version: "1.0.0"})

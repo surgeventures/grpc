@@ -516,17 +516,17 @@ defmodule GRPC.Stub do
        %GRPC.RPCError{
          status: status,
          message: trailers["grpc-message"],
-         details: decode_details(trailers)
+         details: decode_status_details(trailers)
        }}
     end
   end
 
-  defp decode_details(%{"grpc-status-details-bin" => details})
+  defp decode_status_details(%{"grpc-status-details-bin" => details})
        when is_binary(details) do
-    GRPC.Transport.HTTP2.decode_details(details)
+    GRPC.Transport.Utils.decode_status_details(details)
   end
 
-  defp decode_details(_headers), do: nil
+  defp decode_status_details(_headers), do: nil
 
   defp response_stream(
          %{

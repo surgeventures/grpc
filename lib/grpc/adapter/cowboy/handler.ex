@@ -320,7 +320,7 @@ defmodule GRPC.Adapter.Cowboy.Handler do
         req,
         state = %{pid: pid}
       ) do
-    proto_status = maybe_encode_status(error.status, details)
+    proto_status = GRPC.Transport.Utils.encode_status_details(error.status, details)
     trailers = HTTP2.server_trailers(error.status, error.message, proto_status)
     exit_handler(pid, :rpc_error)
     req = send_error_trailers(req, trailers)
@@ -493,32 +493,5 @@ defmodule GRPC.Adapter.Cowboy.Handler do
     :cowboy_req.cast({:read_body, self(), ref, length, period}, req)
 
     {:wait, ref}
-  end
-
-  defp maybe_encode_status(_errorcode, nil), do: ""
-
-  defp maybe_encode_status(errorcode, details) do
-    Google.Rpc.Status.new(code: errorcode, details: Enum.map(details, &encode_detail/1))
-    |> Google.Rpc.Status.encode()
-  end
-
-  defp encode_detail(detail = %{__struct__: type}) do
-    Google.Protobuf.Any.new(type_url: get_type_url(type), value: Protobuf.encode(detail))
-  end
-
-  def get_type_url(type) do
-    parts =
-      type
-      |> to_string
-      |> String.replace("Elixir.", "")
-      |> String.split(".")
-
-    package_name =
-      with {_, list} <- parts |> List.pop_at(-1),
-           do: list |> Enum.map(&String.downcase(&1)) |> Enum.join(".")
-
-    type_name = parts |> List.last()
-
-    "type.googleapis.com/#{package_name}.#{type_name}"
   end
 end

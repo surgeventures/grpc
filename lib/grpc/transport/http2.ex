@@ -60,35 +60,6 @@ defmodule GRPC.Transport.HTTP2 do
     # TODO: Authorization
   end
 
-  def decode_details(details)
-      when is_binary(details) do
-    %Google.Rpc.Status{code: _code, message: _message, details: details} =
-      Google.Rpc.Status.decode(details)
-
-    Enum.map(details, &decode_any/1)
-  end
-
-  defp decode_any(%Google.Protobuf.Any{type_url: type_url, value: value}) do
-    [_, type] = String.split(type_url, "/")
-    msg_module = string_to_module(type)
-    msg_module.decode(value)
-  end
-
-  defp string_to_module(type) do
-    module =
-      type
-      |> String.split(".")
-      |> Enum.map(&Macro.camelize/1)
-      |> (&Enum.concat(["Elixir"], &1)).()
-      |> Enum.join(".")
-      |> String.to_atom()
-
-    case Code.ensure_loaded(module) do
-      {:module, module} -> module
-      {:error, reason} -> raise "Failed to load module. Reason: #{inspect(reason)}"
-    end
-  end
-
   defp content_type(custom, _codec) when is_binary(custom), do: custom
 
   defp content_type(_, codec) do
