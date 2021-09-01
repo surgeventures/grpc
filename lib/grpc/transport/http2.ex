@@ -12,12 +12,19 @@ defmodule GRPC.Transport.HTTP2 do
     %{"content-type" => "application/grpc+#{codec.name}"}
   end
 
-  @spec server_trailers(integer, String.t()) :: map
-  def server_trailers(status \\ Status.ok(), message \\ "") do
-    %{
+  @spec server_trailers(integer, String.t(), String.t()) :: map
+  def server_trailers(status \\ Status.ok(), message \\ "", status_details \\ "") do
+    {_, status_details} = encode_metadata_pair({"grpc-status-details-bin", status_details})
+
+    trailers = %{
       "grpc-status" => Integer.to_string(status),
       "grpc-message" => message
-    }
+     }
+
+     case status_details do
+       "" -> trailers
+       status_details -> Map.put(trailers, "grpc-status-details-bin", status_details)
+     end
   end
 
   @doc """

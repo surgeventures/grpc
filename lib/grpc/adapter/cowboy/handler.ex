@@ -317,11 +317,38 @@ defmodule GRPC.Adapter.Cowboy.Handler do
   end
 
   # expected error raised from user to return error immediately
-  def info({:EXIT, pid, {%RPCError{} = error, _stacktrace}}, req, state = %{pid: pid}) do
-    trailers = HTTP2.server_trailers(error.status, error.message)
+  def info({:EXIT, pid, {%RPCError{details: details} = error, _stacktrace}}, req, state = %{pid: pid}) do
+    proto_status = maybe_encode_status(error.status, details)
+    trailers = HTTP2.server_trailers(error.status, error.message, proto_status)
     exit_handler(pid, :rpc_error)
     req = send_error_trailers(req, trailers)
     {:stop, req, state}
+  end
+
+  defp maybe_encode_status(_errorcode, nil), do: ""
+
+  defp maybe_encode_status(errorcode, details) do
+    Google.Rpc.Status.new(code: errorcode, details: Enum.map(details, &encode_detail/1)) |> Google.Rpc.Status.encode
+  end
+
+  defp encode_detail(detail = %{__struct__: type}) do
+    Google.Protobuf.Any.new(type_url: get_type_url(type), value: Protobuf.encode(detail))
+  end
+
+  def get_type_url(type) do
+    parts =
+      type
+      |> to_string
+      |> String.replace("Elixir.", "")
+      |> String.split(".")
+
+    package_name =
+      with {_, list} <- parts |> List.pop_at(-1),
+           do: list |> Enum.map(&String.downcase(&1)) |> Enum.join(".")
+
+    type_name = parts |> List.last()
+
+    "type.googleapis.com/#{package_name}.#{type_name}"
   end
 
   # unknown error raised from rpc
@@ -381,7 +408,6 @@ defmodule GRPC.Adapter.Cowboy.Handler do
   end
 
   defp do_call_rpc(server, path, stream) do
-
     result = server.__call_rpc__(path, stream)
 
     case result do

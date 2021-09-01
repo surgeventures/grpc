@@ -47,6 +47,11 @@ defmodule GRPC.RPCError do
     parse_args(t, acc)
   end
 
+  defp parse_args([{:details, details} | t], acc) when is_list(details) do
+    acc = %{acc | details: details}
+    parse_args(t, acc)
+  end
+
   def exception(status, message) when is_atom(status) do
     %GRPC.RPCError{status: apply(GRPC.Status, status, []), message: message}
   end

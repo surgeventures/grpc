@@ -186,7 +186,7 @@ defmodule GRPC.Adapter.Gun do
     case result do
       {:response, :fin, status, headers} ->
         if status == 200 do
-          headers = Enum.into(headers, %{})
+          headers = GRPC.Transport.HTTP2.decode_headers(headers)
 
           case headers["grpc-status"] do
             nil ->
@@ -310,7 +310,7 @@ defmodule GRPC.Adapter.Gun do
     %{retries: retries - 1, timeout: timeout}
   end
 
-  defp decode_details(%{trailers: %{"grpc-status-details-bin" => details}})
+  defp decode_details(%{"grpc-status-details-bin" => details})
        when is_binary(details) do
     GRPC.Transport.HTTP2.decode_details(details)
   end
