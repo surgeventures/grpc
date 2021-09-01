@@ -68,7 +68,6 @@ defmodule GRPC.RPCError do
     %GRPC.RPCError{status: status, message: message, details: details}
   end
 
-
   defp status_message(1), do: "The operation was cancelled (typically by the caller)"
   defp status_message(2), do: "Unknown error"
   defp status_message(3), do: "Client specified an invalid argument"

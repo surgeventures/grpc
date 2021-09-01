@@ -51,9 +51,11 @@ defmodule GRPC.Integration.ServerTest do
     end
 
     def say_hello(%{name: "error with details"}, _stream) do
-      detail = Google.Rpc.QuotaFailure.new(
-        violations: [%{subject: "hello", description: "Limit one greeting per person"}]
-      )
+      detail =
+        Google.Rpc.QuotaFailure.new(
+          violations: [%{subject: "hello", description: "Limit one greeting per person"}]
+        )
+
       raise GRPC.RPCError, status: GRPC.Status.resource_exhausted(), details: [detail]
     end
 
@@ -138,11 +140,20 @@ defmodule GRPC.Integration.ServerTest do
       {:error, reply} = channel |> Helloworld.Greeter.Stub.say_hello(req)
 
       assert %GRPC.RPCError{
-        __exception__: true,
-        details: [%Google.Rpc.QuotaFailure{violations: [%Google.Rpc.QuotaFailure.Violation{description: "Limit one greeting per person", subject: "hello"}]}],
-        message: "Some resource has been exhausted",
-        status: 8
-      } == reply
+               __exception__: true,
+               details: [
+                 %Google.Rpc.QuotaFailure{
+                   violations: [
+                     %Google.Rpc.QuotaFailure.Violation{
+                       description: "Limit one greeting per person",
+                       subject: "hello"
+                     }
+                   ]
+                 }
+               ],
+               message: "Some resource has been exhausted",
+               status: 8
+             } == reply
     end)
   end
 

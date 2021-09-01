@@ -19,12 +19,12 @@ defmodule GRPC.Transport.HTTP2 do
     trailers = %{
       "grpc-status" => Integer.to_string(status),
       "grpc-message" => message
-     }
+    }
 
-     case status_details do
-       "" -> trailers
-       status_details -> Map.put(trailers, "grpc-status-details-bin", status_details)
-     end
+    case status_details do
+      "" -> trailers
+      status_details -> Map.put(trailers, "grpc-status-details-bin", status_details)
+    end
   end
 
   @doc """
@@ -61,7 +61,7 @@ defmodule GRPC.Transport.HTTP2 do
   end
 
   def decode_details(details)
-       when is_binary(details) do
+      when is_binary(details) do
     %Google.Rpc.Status{code: _code, message: _message, details: details} =
       Google.Rpc.Status.decode(details)
 
