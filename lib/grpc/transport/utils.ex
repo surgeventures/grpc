@@ -103,17 +103,11 @@ defmodule GRPC.Transport.Utils do
   end
 
   def get_type_url(type) do
-    parts =
-      type
-      |> to_string
-      |> String.replace("Elixir.", "")
-      |> String.split(".")
+    [_ | type] = type |> to_string |> String.split(".")
 
-    package_name =
-      with {_, list} <- parts |> List.pop_at(-1),
-           do: list |> Enum.map(&String.downcase(&1)) |> Enum.join(".")
+    {type_name, package} = type |> List.pop_at(-1)
 
-    type_name = parts |> List.last()
+    package_name = package |> Enum.map(&String.downcase(&1)) |> Enum.join(".")
 
     "type.googleapis.com/#{package_name}.#{type_name}"
   end
