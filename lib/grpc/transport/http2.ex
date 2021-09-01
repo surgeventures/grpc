@@ -140,7 +140,7 @@ defmodule GRPC.Transport.HTTP2 do
   defp encode_metadata_pair({key, val}) do
     # Implementations ... should emit un-padded values
     val = if String.ends_with?(key, "-bin"), do: Base.encode64(val, padding: false), else: val
-    {String.downcase(to_string(key)), val}
+    {String.downcase(key), val}
   end
 
   defp decode_metadata(kv = {key, val}) do

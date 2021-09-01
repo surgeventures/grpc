@@ -219,7 +219,7 @@ defmodule GRPC.Adapter.Gun do
 
       {:response, :nofin, status, headers} ->
         if status == 200 do
-          headers = Enum.into(headers, %{})
+          headers = GRPC.Transport.HTTP2.decode_headers(headers)
 
           if headers["grpc-status"] && headers["grpc-status"] != "0" do
             {:error,
