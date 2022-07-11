@@ -38,7 +38,7 @@ defmodule GRPC.Mixfile do
       {:cowboy, "~> 2.7"},
       {:gun, "~> 2.0.0", hex: :grpc_gun},
       # 2.9.0 fixes some important bugs, so it's better to use ~> 2.9.0
-      # {:cowlib, "~> 2.9.0", override: true},
+      {:cowlib, "~> 2.9.0", override: true},
       {:ex_doc, "~> 0.23", only: :dev},
       {:inch_ex, "~> 2.0", only: [:dev, :test]},
       {:dialyxir, "~> 1.0", only: [:dev, :test], runtime: false},
