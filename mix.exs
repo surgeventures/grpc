@@ -34,7 +34,7 @@ defmodule GRPC.Mixfile do
 
   defp deps do
     [
-      {:protobuf, "~> 0.12.0-git-5109", hex: :protobuf_fresha},
+      {:protobuf, "~> 0.12.0-git-d5a0", hex: :protobuf_fresha},
       {:cowboy, "~> 2.7"},
       {:gun, "~> 2.0.0", hex: :grpc_gun},
       # 2.9.0 fixes some important bugs, so it's better to use ~> 2.9.0
