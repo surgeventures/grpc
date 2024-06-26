@@ -24,6 +24,7 @@ jobs:
       - name: Check format
         run: mix format --check-formatted
 
+
   tests:
     runs-on: ubuntu-latest
     name: OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}
