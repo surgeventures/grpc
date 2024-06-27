@@ -3,9 +3,9 @@ name: Elixir CI Checks
 env:
   DEBIAN_FRONTEND: noninteractive
   DEPENDENCY_FILE: mix.lock
-  ELIXIR_VERSION: 1.16.3 # Elixir version used during package publishing
+  ELIXIR_VERSION: 1.10.4 # Elixir version used during package publishing
   JOB_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-  OTP_VERSION: 26.2.5.1 # OTP version used during package publishing
+  OTP_VERSION: 22.3.4.7 # OTP version used during package publishing
   RELEVANT_FILES: "mix.lock mix.exs lib priv config test" # Important, this controls the caching, make sure to keep this right
   REPOSITORY: grpc
   RUNNER_OS: ubuntu22 # Must match Elixir/OTP version in described in action erlef/setup-beam@v1
@@ -34,9 +34,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        otp: [23, 24, 25]
-        elixir: [1.14, 1.15, 1.16]
-        runner-os: [ubuntu22]
+        otp: [20.3.8.26, 21.3.8.24, 22.3.4.7]
+        elixir: [1.9.4, 1.10.4]
+        runner-os: [ubuntu20]
     steps:
       - name: Checkout latest codebase
         uses: actions/checkout@v4
@@ -107,9 +107,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        otp: [23, 24, 25]
-        elixir: [1.14, 1.15, 1.16]
-        runner-os: [ubuntu22]
+        otp: [20.3.8.26, 21.3.8.24, 22.3.4.7]
+        elixir: [1.9.4, 1.10.4]
+        runner-os: [ubuntu20]
     steps:
       - name: Checkout latest codebase
         uses: actions/checkout@v4
@@ -254,10 +254,10 @@ jobs:
 
 
   interop-tests:
-    runs-on: ubuntu-latest
+    runs-on: runs-on,runner=2cpu-linux-x64
     name: Interop tests
     container:
-      image: elixir:1.16-slim
+      image: elixir:1.10-slim
     steps:
     - uses: actions/checkout@v4
     - name: Install Dependencies
@@ -271,10 +271,10 @@ jobs:
       working-directory: ./interop
 
   check_release:
-    runs-on: ubuntu-latest
+    runs-on: runs-on,runner=2cpu-linux-x64
     name: Check release
     container:
-      image: elixir:1.16-slim
+      image: elixir:1.10-slim
     steps:
       - uses: actions/checkout@v4
       - name: Install Dependencies
