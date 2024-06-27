@@ -8,7 +8,7 @@ env:
   OTP_VERSION: 22.3.4.7 # OTP version used during package publishing
   RELEVANT_FILES: "mix.lock mix.exs lib priv config test" # Important, this controls the caching, make sure to keep this right
   REPOSITORY: grpc
-  RUNNER_OS: ubuntu18 # Must match Elixir/OTP version in described in action erlef/setup-beam@v1
+  RUNNER_OS: ubuntu20 # Must match Elixir/OTP version in described in action erlef/setup-beam@v1
   SHA: ${{ github.sha }}
 
 concurrency:
@@ -36,10 +36,7 @@ jobs:
       matrix:
         otp: [20.3.8.26, 21.3.8.24, 22.3.4.7]
         elixir: [1.9.4, 1.10.4]
-        runner-os: [ubuntu18]
-        exclude:
-          - elixir: 1.10.4
-            otp: 20.3.8.26
+        runner-os: [ubuntu20]
     steps:
       - name: Checkout latest codebase
         uses: actions/checkout@v4
@@ -110,12 +107,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        otp: [20.3.8.26, 21.3.8.24, 22.3.4.7]
+        otp: [21.3.8.24, 22.3.4.7]
         elixir: [1.9.4, 1.10.4]
-        runner-os: [ubuntu18]
-        exclude:
-          - elixir: 1.10.4
-            otp: 20.3.8.26
+        runner-os: [ubuntu20]
     steps:
       - name: Checkout latest codebase
         uses: actions/checkout@v4
