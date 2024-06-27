@@ -27,7 +27,7 @@ on:
 
 jobs:
   static:
-    name: Static Checks (Elixir ${{ matrix.elixir }})
+    name: Static Checks (Elixir ${{ matrix.elixir }} & OTP ${{ matrix.otp }})
     runs-on: runs-on,runner=2cpu-linux-x64
     outputs:
       HASH: ${{ steps.hash.outputs.HASH }}
@@ -102,7 +102,7 @@ jobs:
           echo "Running publish --dry-run"
           mix hex.publish --dry-run
   test:
-    name: Unit Tests (Elixir ${{ matrix.elixir }})
+    name: Unit Tests (Elixir ${{ matrix.elixir }} & OTP ${{ matrix.otp }})
     runs-on: runs-on,runner=2cpu-linux-x64
     strategy:
       fail-fast: false
