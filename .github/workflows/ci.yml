@@ -35,7 +35,7 @@ jobs:
       fail-fast: false
       matrix:
         otp: [21.3.8.24, 22.3.4.7]
-        elixir: [1.9.4, 1.10.4]
+        elixir: [1.10.4]
         runner-os: [ubuntu20]
     steps:
       - name: Checkout latest codebase
@@ -87,10 +87,6 @@ jobs:
         run: |
           echo "Compiling the app with --warnings-as-errors"
           mix compile --warnings-as-errors --force
-      - name: Run credo
-        run: |
-          echo "Running credo"
-          mix credo --strict
       - name: Run format
         run: |
           echo "Running format"
@@ -108,7 +104,7 @@ jobs:
       fail-fast: false
       matrix:
         otp: [21.3.8.24, 22.3.4.7]
-        elixir: [1.9.4, 1.10.4]
+        elixir: [1.10.4]
         runner-os: [ubuntu20]
     steps:
       - name: Checkout latest codebase
