@@ -34,7 +34,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        otp: [20.3.8.26, 21.3.8.24, 22.3.4.7]
+        otp: [21.3.8.24, 22.3.4.7]
         elixir: [1.9.4, 1.10.4]
         runner-os: [ubuntu20]
     steps:
