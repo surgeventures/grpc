@@ -9,7 +9,7 @@ defmodule GRPC.Transport.HTTP2 do
   require Logger
 
   def server_headers(%{codec: codec}) do
-    %{"content-type" => "application/grpc+#{codec.name}"}
+    %{"content-type" => "application/grpc+#{codec.name()}"}
   end
 
   @spec server_trailers(integer, String.t(), String.t()) :: map
@@ -68,7 +68,7 @@ defmodule GRPC.Transport.HTTP2 do
     if codec == GRPC.Codec.Proto do
       "application/grpc"
     else
-      "application/grpc+#{codec.name}"
+      "application/grpc+#{codec.name()}"
     end
   end
 
