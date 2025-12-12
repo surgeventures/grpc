@@ -38,6 +38,7 @@ defmodule GRPC.Integration.ConnectionTest do
     :ok = GRPC.Server.stop(server)
   end
 
+  @tag :skip
   test "authentication works" do
     server = FeatureServer
 

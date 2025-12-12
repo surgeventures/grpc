@@ -161,6 +161,7 @@ defmodule GRPC.Adapter.Cowboy do
     idle_timeout = Keyword.get(opts, :idle_timeout, :infinity)
     num_acceptors = Keyword.get(opts, :num_acceptors, @default_num_acceptors)
     max_connections = Keyword.get(opts, :max_connections, @default_max_connections)
+    instrument_cowboy = Keyword.get(opts, :cowboy_telemetry, false)
 
     # https://ninenines.eu/docs/en/cowboy/2.7/manual/cowboy_http2/
     opts =
@@ -170,7 +171,11 @@ defmodule GRPC.Adapter.Cowboy do
           idle_timeout: idle_timeout,
           inactivity_timeout: idle_timeout,
           settings_timeout: idle_timeout,
-          stream_handlers: [:grpc_stream_h],
+          stream_handlers: if instrument_cowboy do
+            [:cowboy_telemetry_h, :grpc_stream_h]
+          else
+            [:grpc_stream_h]
+          end,
           # The default option is small
           # https://github.com/ninenines/cowboy/issues/1398
           # If there are 1000 streams in one connection, then 1000/s frames per stream.

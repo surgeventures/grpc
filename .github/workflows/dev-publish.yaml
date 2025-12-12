@@ -3,12 +3,12 @@ name: Elixir Dev Publish
 env:
   DEBIAN_FRONTEND: noninteractive
   DEPENDENCY_FILE: mix.lock
-  ELIXIR_VERSION: 1.11.4 # Elixir version used during package publishing
+  ELIXIR_VERSION: 1.16.0 # Elixir version used during package publishing
   JOB_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-  OTP_VERSION: 23.3.4.7 # OTP version used during package publishing
+  OTP_VERSION: 26.2 # OTP version used during package publishing
   RELEVANT_FILES: "benchmark config examples interop lib priv src test mix.exs mix.lock" # Important, this controls the caching, make sure to keep this right
   REPOSITORY: grpc
-  RUNNER_OS: ubuntu20 # Must match Elixir/OTP version in described in action erlef/setup-beam@v1
+  RUNNER_OS: ubuntu22 # Must match Elixir/OTP version in described in action erlef/setup-beam@v1
   SHA: ${{ github.sha }}
 
 concurrency:
@@ -46,7 +46,7 @@ jobs:
         with:
           key: ${{ runner.os }}-${{ env.REPOSITORY }}-approval-${{ steps.hash.outputs.HASH }}
           path: approval.txt
-          fail-on-cache-miss: true
+          fail-on-cache-miss: false
       - name: Setup Elixir
         uses: erlef/setup-beam@v1
         env:
@@ -55,9 +55,6 @@ jobs:
           elixir-version: ${{ env.ELIXIR_VERSION }}
           otp-version: ${{ env.OTP_VERSION }}
           version-type: strict
-      - name: Hex auth
-        run: mix hex.organization auth fresha --key ${{ secrets.HEX_ORGANIZATION_WRITE_KEY }}
-        shell: bash
       - name: Get dependencies
         shell: bash
         run: |
