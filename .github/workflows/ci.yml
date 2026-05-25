@@ -8,7 +8,7 @@ env:
   OTP_VERSION: 22.3.4.7 # OTP version used during package publishing
   RELEVANT_FILES: "benchmark config examples interop lib priv src test mix.exs mix.lock" # Important, this controls the caching, make sure to keep this right
   REPOSITORY: grpc
-  RUNNER_OS: ubuntu20 # Must match Elixir/OTP version in described in action erlef/setup-beam@v1
+  RUNNER_OS: ubuntu20 # Must match Elixir/OTP version in described in action erlef/setup-beam@fc68ffb90438ef2936bbb3251622353b3dcb2f93 # v1
   SHA: ${{ github.sha }}
 
 concurrency:
@@ -45,7 +45,7 @@ jobs:
           clean: false
           persist-credentials: true
       - name: Setup Elixir
-        uses: erlef/setup-beam@v1
+        uses: erlef/setup-beam@fc68ffb90438ef2936bbb3251622353b3dcb2f93 # v1
         env:
           ImageOS: ${{ matrix.runner-os }}
         with:
@@ -114,7 +114,7 @@ jobs:
           clean: false
           persist-credentials: true
       - name: Setup Elixir
-        uses: erlef/setup-beam@v1
+        uses: erlef/setup-beam@fc68ffb90438ef2936bbb3251622353b3dcb2f93 # v1
         env:
           ImageOS: ${{ matrix.runner-os }}
         with:
@@ -225,7 +225,7 @@ jobs:
           clean: false
           persist-credentials: true
       - name: Setup Elixir
-        uses: erlef/setup-beam@v1
+        uses: erlef/setup-beam@fc68ffb90438ef2936bbb3251622353b3dcb2f93 # v1
         env:
           ImageOS: ${{ env.RUNNER_OS }}
         with:
