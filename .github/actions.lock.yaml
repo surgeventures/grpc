@@ -1,11 +1,11 @@
 version: 1
-generated_at: 2026-06-11T15:38:43Z
+generated_at: 2026-06-15T13:15:24Z
 internal: []
 trusted:
   - action: actions/checkout
     refs:
       - 34e114876b0b11c390a56381ad16ebd13914f8d5
-      - v1
+      - 50fbc622fc4ef5163becd7fab6573eac35f8462e
     occurrences:
       34e114876b0b11c390a56381ad16ebd13914f8d5:
         .github/workflows/ci.yml:
@@ -17,7 +17,7 @@ trusted:
           - jobs.check_release.steps.[0].uses
         .github/workflows/dev-publish.yaml:
           - jobs.dev-publish.steps.[0].uses
-      v1:
+      50fbc622fc4ef5163becd7fab6573eac35f8462e:
         .github/workflows/cron_ci.yml:
           - jobs.interop-tests.steps.[0].uses
   - action: runs-on/cache
