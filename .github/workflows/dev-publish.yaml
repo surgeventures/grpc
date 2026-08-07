@@ -42,13 +42,13 @@ jobs:
           echo "APPROVAL PRODUCED BY SUCCESSFULL CHECKS EXECUTION WILL LAND IN CACHE"
           echo "HASH=$HASH" >> $GITHUB_OUTPUT
       - name: Check for CI successes
-        uses: runs-on/cache/restore@a5f51d6f3fece787d03b7b4e981c82538a0654ed # v4
+        uses: step-security/runs-on-cache/restore@e61ed9b0206c630e9a6bb5f12ca4cd78ae7bbe93 # v5.0.8
         with:
           key: ${{ runner.os }}-${{ env.REPOSITORY }}-approval-${{ steps.hash.outputs.HASH }}
           path: approval.txt
           fail-on-cache-miss: true
       - name: Setup Elixir
-        uses: erlef/setup-beam@fc68ffb90438ef2936bbb3251622353b3dcb2f93 # v1
+        uses: step-security/setup-beam@05e480cfdc64c72ab6c25b134dd1f57e29776c84 # v1.24.1
         env:
           ImageOS: ${{ env.RUNNER_OS }}
         with:
