@@ -1,5 +1,5 @@
 version: 1
-generated_at: 2026-06-15T13:15:24Z
+generated_at: 2026-08-21T11:43:52Z
 internal: []
 trusted:
   - action: actions/checkout
@@ -9,6 +9,24 @@ trusted:
     occurrences:
       34e114876b0b11c390a56381ad16ebd13914f8d5:
         .github/workflows/ci.yml:
+          - jobs.static.steps.[1].uses
+          - jobs.test.steps.[1].uses
+          - jobs.permit.steps.[1].uses
+          - jobs.publish.steps.[1].uses
+          - jobs.interop-tests.steps.[1].uses
+          - jobs.check_release.steps.[1].uses
+        .github/workflows/dev-publish.yaml:
+          - jobs.dev-publish.steps.[1].uses
+      50fbc622fc4ef5163becd7fab6573eac35f8462e:
+        .github/workflows/cron_ci.yml:
+          - jobs.interop-tests.steps.[0].uses
+external:
+  - action: step-security/harden-runner
+    refs:
+      - 9af89fc71515a100421586dfdb3dc9c984fbf411
+    occurrences:
+      9af89fc71515a100421586dfdb3dc9c984fbf411:
+        .github/workflows/ci.yml:
           - jobs.static.steps.[0].uses
           - jobs.test.steps.[0].uses
           - jobs.permit.steps.[0].uses
@@ -17,45 +35,42 @@ trusted:
           - jobs.check_release.steps.[0].uses
         .github/workflows/dev-publish.yaml:
           - jobs.dev-publish.steps.[0].uses
-      50fbc622fc4ef5163becd7fab6573eac35f8462e:
-        .github/workflows/cron_ci.yml:
-          - jobs.interop-tests.steps.[0].uses
-  - action: runs-on/cache
+  - action: step-security/mise-action
     refs:
-      - a5f51d6f3fece787d03b7b4e981c82538a0654ed
+      - 2796166110dee826668caddd4bffedae5116e7cd
     occurrences:
-      a5f51d6f3fece787d03b7b4e981c82538a0654ed:
+      2796166110dee826668caddd4bffedae5116e7cd:
         .github/workflows/ci.yml:
-          - jobs.static.steps.[4].uses
-          - jobs.static.steps.[6].uses
-          - jobs.test.steps.[4].uses
-          - jobs.test.steps.[6].uses
-  - action: runs-on/cache/restore
-    refs:
-      - a5f51d6f3fece787d03b7b4e981c82538a0654ed
-    occurrences:
-      a5f51d6f3fece787d03b7b4e981c82538a0654ed:
+          - jobs.static.steps.[2].uses
+          - jobs.test.steps.[2].uses
+          - jobs.publish.steps.[2].uses
         .github/workflows/dev-publish.yaml:
-          - jobs.dev-publish.steps.[2].uses
-  - action: runs-on/cache/save
+          - jobs.dev-publish.steps.[4].uses
+  - action: step-security/runs-on-cache
     refs:
-      - a5f51d6f3fece787d03b7b4e981c82538a0654ed
+      - e61ed9b0206c630e9a6bb5f12ca4cd78ae7bbe93
     occurrences:
-      a5f51d6f3fece787d03b7b4e981c82538a0654ed:
+      e61ed9b0206c630e9a6bb5f12ca4cd78ae7bbe93:
         .github/workflows/ci.yml:
-          - jobs.permit.steps.[3].uses
-external:
-  - action: erlef/setup-beam
+          - jobs.static.steps.[6].uses
+          - jobs.static.steps.[8].uses
+          - jobs.test.steps.[6].uses
+          - jobs.test.steps.[8].uses
+  - action: step-security/runs-on-cache/restore
     refs:
-      - fc68ffb90438ef2936bbb3251622353b3dcb2f93
+      - e61ed9b0206c630e9a6bb5f12ca4cd78ae7bbe93
     occurrences:
-      fc68ffb90438ef2936bbb3251622353b3dcb2f93:
-        .github/workflows/ci.yml:
-          - jobs.static.steps.[1].uses
-          - jobs.test.steps.[1].uses
-          - jobs.publish.steps.[1].uses
+      e61ed9b0206c630e9a6bb5f12ca4cd78ae7bbe93:
         .github/workflows/dev-publish.yaml:
           - jobs.dev-publish.steps.[3].uses
+  - action: step-security/runs-on-cache/save
+    refs:
+      - e61ed9b0206c630e9a6bb5f12ca4cd78ae7bbe93
+    occurrences:
+      e61ed9b0206c630e9a6bb5f12ca4cd78ae7bbe93:
+        .github/workflows/ci.yml:
+          - jobs.permit.steps.[4].uses
 local: []
 docker: []
 dynamic: []
+nested_floating_deps: []
