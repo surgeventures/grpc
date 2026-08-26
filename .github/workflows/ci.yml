@@ -4,10 +4,8 @@ env:
   DEBIAN_FRONTEND: noninteractive
   DEPENDENCY_FILE: mix.lock
   ELIXIR_VERSION: 1.10.4 # Elixir version used during package publishing
-  MISE_ELIXIR_VERSION: 1.10.4 # Elixir version used during package publishing
   JOB_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
   OTP_VERSION: 22.3.4.7 # OTP version used during package publishing
-  MISE_ERLANG_VERSION: 22.3.4.7 # OTP version used during package publishing
   RELEVANT_FILES: "benchmark config examples interop lib priv src test mix.exs mix.lock" # Important, this controls the caching, make sure to keep this right
   REPOSITORY: grpc
   RUNNER_OS: ubuntu20 # Must match Elixir/OTP version in described in action erlef/setup-beam@fc68ffb90438ef2936bbb3251622353b3dcb2f93 # v1
@@ -29,19 +27,10 @@ on:
 
 jobs:
   static:
-    name: Static Checks (Elixir ${{ matrix.elixir }} & OTP ${{ matrix.otp }})
+    name: Static Checks
     runs-on: runs-on,runner=2cpu-linux-x64
-    env:
-      MISE_ELIXIR_VERSION: ${{ matrix.elixir }}
-      MISE_ERLANG_VERSION: ${{ matrix.otp }}
     outputs:
       HASH: ${{ steps.hash.outputs.HASH }}
-    strategy:
-      fail-fast: false
-      matrix:
-        otp: [21.3.8.24, 22.3.4.7]
-        elixir: [1.10.4]
-        runner-os: [ubuntu20]
     steps:
       - name: Harden the runner
         uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2
@@ -74,7 +63,7 @@ jobs:
           path: |
             deps
             _build/dev
-          key: ${{ runner.os }}-${{ matrix.elixir }}-${{ matrix.otp }}-precompile-deps-dev-${{ hashFiles('mix.lock') }}
+          key: ${{ runner.os }}-precompile-deps-dev-${{ hashFiles('mix.lock') }}
       - name: Install dependencies
         if: steps.deps-cache.outputs.cache-hit != 'true'
         env:
@@ -87,7 +76,7 @@ jobs:
         id: build-cache
         with:
           path: '**/*'
-          key: ${{ runner.os }}-${{ matrix.elixir }}-${{ matrix.otp }}-compile-dev-${{ steps.hash.outputs.HASH }}
+          key: ${{ runner.os }}-compile-dev-${{ steps.hash.outputs.HASH }}
       - name: Compile with warning as --warnings-as-errors
         if: steps.build-cache.outputs.cache-hit != 'true'
         run: |
@@ -104,17 +93,8 @@ jobs:
           echo "Running publish --dry-run"
           mix hex.publish --dry-run
   test:
-    name: Unit Tests (Elixir ${{ matrix.elixir }} & OTP ${{ matrix.otp }})
+    name: Unit Tests
     runs-on: runs-on,runner=2cpu-linux-x64
-    env:
-      MISE_ELIXIR_VERSION: ${{ matrix.elixir }}
-      MISE_ERLANG_VERSION: ${{ matrix.otp }}
-    strategy:
-      fail-fast: false
-      matrix:
-        otp: [21.3.8.24, 22.3.4.7]
-        elixir: [1.10.4]
-        runner-os: [ubuntu20]
     steps:
       - name: Harden the runner
         uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2
@@ -147,7 +127,7 @@ jobs:
           path: |
             deps
             _build/test
-          key: ${{ runner.os }}-${{ matrix.elixir }}-${{ matrix.otp }}-precompile-deps-test-${{ hashFiles('mix.lock') }}
+          key: ${{ runner.os }}-precompile-deps-test-${{ hashFiles('mix.lock') }}
       - name: Install dependencies
         if: steps.deps-cache.outputs.cache-hit != 'true'
         env:
@@ -160,7 +140,7 @@ jobs:
         id: build-cache
         with:
           path: '**/*'
-          key: ${{ runner.os }}-${{ matrix.elixir }}-${{ matrix.otp }}-compile-test-${{ steps.hash.outputs.HASH }}
+          key: ${{ runner.os }}-compile-test-${{ steps.hash.outputs.HASH }}
       - name: Compile with MIX_ENV=test
         if: steps.build-cache.outputs.cache-hit != 'true'
         env:
