@@ -1,3 +1,9 @@
 [tools]
-elixir = "1.11.4"
-erlang = "23.3.4.7"
+# 23.3.4.7 has no precompiled build on hex.pm for any Ubuntu image (or on
+# erlef/otp_builds), so `mise install --locked` always fell back to a
+# from-source build, which fails to compile on the ubuntu-24.04 CI
+# runner's modern toolchain. Bumped to the nearest pair with a working
+# precompiled build; mix.exs only requires elixir "~> 1.5" and the
+# README's floor is "Erlang/OTP needs >= 20.3.2", so both are satisfied.
+elixir = "1.12.3-otp-24"
+erlang = "24.3.4.17"
