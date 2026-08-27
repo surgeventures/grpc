@@ -3,81 +3,77 @@
 lockfile_version = 1
 
 [[tools.elixir]]
-version = "1.12.3-otp-24"
+version = "1.13.4-otp-25"
 backend = "core:elixir"
-specifiers = ["1.12.3-otp-24"]
+specifiers = ["1.13.4-otp-25"]
 
 [tools.elixir."platforms.linux-arm64"]
-checksum = "sha256:9f5c26ce9a0b5e26dd5a67792646bd9f4fb990964c2f54d8015f403f79dd583b"
-url = "https://builds.hex.pm/builds/elixir/v1.12.3-otp-24.zip"
+checksum = "sha256:7e0ef456a8726849d302f71cbfd294846c47dbc244e87762883aed5f6362b00e"
+url = "https://builds.hex.pm/builds/elixir/v1.13.4-otp-25.zip"
 
 [tools.elixir."platforms.linux-arm64-musl"]
-checksum = "sha256:9f5c26ce9a0b5e26dd5a67792646bd9f4fb990964c2f54d8015f403f79dd583b"
-url = "https://builds.hex.pm/builds/elixir/v1.12.3-otp-24.zip"
+checksum = "sha256:7e0ef456a8726849d302f71cbfd294846c47dbc244e87762883aed5f6362b00e"
+url = "https://builds.hex.pm/builds/elixir/v1.13.4-otp-25.zip"
 
 [tools.elixir."platforms.linux-x64"]
-checksum = "sha256:9f5c26ce9a0b5e26dd5a67792646bd9f4fb990964c2f54d8015f403f79dd583b"
-url = "https://builds.hex.pm/builds/elixir/v1.12.3-otp-24.zip"
+checksum = "sha256:7e0ef456a8726849d302f71cbfd294846c47dbc244e87762883aed5f6362b00e"
+url = "https://builds.hex.pm/builds/elixir/v1.13.4-otp-25.zip"
 
 [tools.elixir."platforms.linux-x64-musl"]
-checksum = "sha256:9f5c26ce9a0b5e26dd5a67792646bd9f4fb990964c2f54d8015f403f79dd583b"
-url = "https://builds.hex.pm/builds/elixir/v1.12.3-otp-24.zip"
+checksum = "sha256:7e0ef456a8726849d302f71cbfd294846c47dbc244e87762883aed5f6362b00e"
+url = "https://builds.hex.pm/builds/elixir/v1.13.4-otp-25.zip"
 
 [tools.elixir."platforms.macos-arm64"]
-checksum = "sha256:9f5c26ce9a0b5e26dd5a67792646bd9f4fb990964c2f54d8015f403f79dd583b"
-url = "https://builds.hex.pm/builds/elixir/v1.12.3-otp-24.zip"
+checksum = "sha256:7e0ef456a8726849d302f71cbfd294846c47dbc244e87762883aed5f6362b00e"
+url = "https://builds.hex.pm/builds/elixir/v1.13.4-otp-25.zip"
 
 [tools.elixir."platforms.macos-x64"]
-checksum = "sha256:9f5c26ce9a0b5e26dd5a67792646bd9f4fb990964c2f54d8015f403f79dd583b"
-url = "https://builds.hex.pm/builds/elixir/v1.12.3-otp-24.zip"
+checksum = "sha256:7e0ef456a8726849d302f71cbfd294846c47dbc244e87762883aed5f6362b00e"
+url = "https://builds.hex.pm/builds/elixir/v1.13.4-otp-25.zip"
 
 [tools.elixir."platforms.windows-x64"]
-checksum = "sha256:9f5c26ce9a0b5e26dd5a67792646bd9f4fb990964c2f54d8015f403f79dd583b"
-url = "https://builds.hex.pm/builds/elixir/v1.12.3-otp-24.zip"
+checksum = "sha256:7e0ef456a8726849d302f71cbfd294846c47dbc244e87762883aed5f6362b00e"
+url = "https://builds.hex.pm/builds/elixir/v1.13.4-otp-25.zip"
 
 [[tools.erlang]]
-version = "24.3.4.17"
+version = "25.3.2.21"
 backend = "core:erlang"
-specifiers = ["24.3.4.17"]
+specifiers = ["25.3.2.21"]
 
 [tools.erlang."platforms.linux-arm64-musl"]
-url = "https://github.com/erlang/otp/releases/download/OTP-24.3.4.17/otp_src_24.3.4.17.tar.gz"
-url_api = "https://api.github.com/repos/erlang/otp/releases/assets/167108697"
+url = "https://github.com/erlang/otp/releases/download/OTP-25.3.2.21/otp_src_25.3.2.21.tar.gz"
+url_api = "https://api.github.com/repos/erlang/otp/releases/assets/252954810"
 install = "source"
 
 [tools.erlang."platforms.linux-x64-musl"]
-url = "https://github.com/erlang/otp/releases/download/OTP-24.3.4.17/otp_src_24.3.4.17.tar.gz"
-url_api = "https://api.github.com/repos/erlang/otp/releases/assets/167108697"
+url = "https://github.com/erlang/otp/releases/download/OTP-25.3.2.21/otp_src_25.3.2.21.tar.gz"
+url_api = "https://api.github.com/repos/erlang/otp/releases/assets/252954810"
 install = "source"
 
 [tools.erlang."platforms.macos-arm64"]
-url = "https://github.com/erlang/otp/releases/download/OTP-24.3.4.17/otp_src_24.3.4.17.tar.gz"
-url_api = "https://api.github.com/repos/erlang/otp/releases/assets/167108697"
-install = "source"
+url = "https://github.com/erlef/otp_builds/releases/download/OTP-25.3.2.21/otp-aarch64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/erlef/otp_builds/releases/assets/252954848"
 
 [tools.erlang."platforms.macos-x64"]
-url = "https://github.com/erlang/otp/releases/download/OTP-24.3.4.17/otp_src_24.3.4.17.tar.gz"
-url_api = "https://api.github.com/repos/erlang/otp/releases/assets/167108697"
-install = "source"
+url = "https://github.com/erlef/otp_builds/releases/download/OTP-25.3.2.21/otp-x86_64-apple-darwin.tar.gz"
+url_api = "https://api.github.com/repos/erlef/otp_builds/releases/assets/252955882"
 
 [tools.erlang."platforms.windows-x64"]
-url = "https://github.com/erlang/otp/releases/download/OTP-24.3.4.17/otp_win64_24.3.4.17.zip"
-url_api = "https://api.github.com/repos/erlang/otp/releases/assets/192554761"
+url = "https://github.com/erlang/otp/releases/download/OTP-25.3.2.21/otp_win64_25.3.2.21.zip"
+url_api = "https://api.github.com/repos/erlang/otp/releases/assets/252970712"
 
 [[tools.erlang]]
-version = "24.3.4.17"
+version = "25.3.2.21"
 backend = "core:erlang"
-specifiers = ["24.3.4.17"]
+specifiers = ["25.3.2.21"]
 
 [tools.erlang.options]
 precompiled_os = "ubuntu-24.04"
 
 [tools.erlang."platforms.linux-arm64"]
-url = "https://github.com/erlang/otp/releases/download/OTP-24.3.4.17/otp_src_24.3.4.17.tar.gz"
-url_api = "https://api.github.com/repos/erlang/otp/releases/assets/167108697"
-install = "source"
+checksum = "sha256:c3241fa07885de08902c36575f3b5f3ec12cbbf64fb7ef7314e2a68e91a0320e"
+url = "https://builds.hex.pm/builds/otp/arm64/ubuntu-24.04/OTP-25.3.2.21.tar.gz"
 
 [tools.erlang."platforms.linux-x64"]
-url = "https://github.com/erlang/otp/releases/download/OTP-24.3.4.17/otp_src_24.3.4.17.tar.gz"
-url_api = "https://api.github.com/repos/erlang/otp/releases/assets/167108697"
-install = "source"
+checksum = "sha256:67948437a40eecd73195bfc3f9208e35bd2715a6a3768b4b2deef1e505d12188"
+url = "https://builds.hex.pm/builds/otp/amd64/ubuntu-24.04/OTP-25.3.2.21.tar.gz"
